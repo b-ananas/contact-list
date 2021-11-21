@@ -4,4 +4,6 @@ export default interface Contact {
   email: string;
   gender: "Female" | "Male";
   avatar: string;
+  id: string;
+  checked: boolean;
 }
