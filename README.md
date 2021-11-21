@@ -1,6 +1,3 @@
-
-## Available Scripts
-
 ### Setup
 1. Rename `constants.example.ts` to `constants.ts`
 2. Update `ApiUrl` in `constants.ts`

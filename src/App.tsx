@@ -72,8 +72,8 @@ function App() {
           {contacts
             .filter(
               (contact) =>
-                contact.lastName.includes(filter) ||
-                contact.firstName.includes(filter)
+                contact.lastName.toLowerCase().includes(filter) ||
+                contact.firstName.toLowerCase().includes(filter)
             )
             .map((usr) => (
               <ContactRow
