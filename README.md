@@ -1,7 +1,10 @@
 
 ## Available Scripts
 
-In the project directory, you can run:
+### Setup
+1. Rename `constants.example.ts` to `constants.ts`
+2. Update `ApiUrl` in `constatns.ts`
+3. Install dependencies by running `yarn` in your shell
 
 ### `yarn start`
 
