@@ -1,1 +1,1 @@
-export const ApiUrl = '';
+export const ApiUrl = "";

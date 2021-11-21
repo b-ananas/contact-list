@@ -1,5 +1,4 @@
 import Contact from "../Contact.interface";
-import "../App.css";
 
 interface Props {
   contact: Contact;
@@ -8,11 +7,9 @@ interface Props {
 
 export const ContactRow: React.FC<Props> = (props: Props) => {
   return (
-    <tr onClick={props.handleClick} className={props.contact.checked ? "checked" : "unchecked"}>
+    <tr onClick={props.handleClick}>
       <td>
-        <div
-          className={`avatar`}
-        >
+        <div className={`avatar`}>
           <img
             src={props.contact.avatar}
             alt={

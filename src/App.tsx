@@ -3,13 +3,16 @@ import _ from "lodash";
 import Contact from "./Contact.interface";
 import { ApiUrl } from "./constants";
 import { ContactRow } from "./components/ContactRow";
-import "./App.css";
-
+import "bootstrap/dist/css/bootstrap.min.css";
+import Table from "react-bootstrap/Table";
 function App() {
   const [contacts, setContacts] = useState<Array<Contact>>([]);
+
+  //retrieve contacts from api
   useEffect(() => {
     fetch(ApiUrl)
       .then((response) => response.json())
+      //move from snake_case to camelCase
       .then((json) =>
         json.map((contact: Contact) =>
           _.mapKeys(contact, (_value: any, key: any) => _.camelCase(key))
@@ -25,19 +28,6 @@ function App() {
 
   const [checked, setChecked] = useState<Set<string>>(new Set());
 
-  // toggle checked for contact of given id
-  const udpateChecked = (id: string) => {
-    if (checked.has(id)) {
-      const newSet = new Set(checked);
-      newSet.delete(id);
-      setChecked(newSet);
-    } else {
-      const newSet = new Set(checked);
-      newSet.add(id);
-      setChecked(newSet);
-    }
-  };
-
   useEffect(() => {
     console.log(checked);
     setContacts(
@@ -49,18 +39,50 @@ function App() {
     );
   }, [checked]);
 
-  const [filter, setFilter] = useState('')
+  // add or remove from list of checked contacts
+  const updateChecked = (id: string) => {
+    if (checked.has(id)) {
+      const newSet = new Set(checked);
+      newSet.delete(id);
+      setChecked(newSet);
+    } else {
+      const newSet = new Set(checked);
+      newSet.add(id);
+      setChecked(newSet);
+    }
+  };
+
+  const [filter, setFilter] = useState("");
 
   return (
     <div className="App">
-    <input type="text" onChange={e => setFilter(e.target.value)}></input>
-      <table>
-        {contacts
-          .filter((contact) => contact.lastName.includes(filter) || contact.firstName.includes(filter))
-          .map((usr) => (
-          <ContactRow contact={usr} handleClick={() => udpateChecked(usr.id)} />
-        ))}
-      </table>
+      <Table striped bordered hover>
+        <thead>
+          <th></th>
+          <th>
+            <input
+              placeholder="filter"
+              type="text"
+              onChange={(e) => setFilter(e.target.value)}
+            ></input>
+          </th>
+          <th>Select</th>
+        </thead>
+        <tbody>
+          {contacts
+            .filter(
+              (contact) =>
+                contact.lastName.includes(filter) ||
+                contact.firstName.includes(filter)
+            )
+            .map((usr) => (
+              <ContactRow
+                contact={usr}
+                handleClick={() => updateChecked(usr.id)}
+              />
+            ))}
+        </tbody>
+      </Table>
     </div>
   );
 }
