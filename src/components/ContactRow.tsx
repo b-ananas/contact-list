@@ -8,13 +8,18 @@ interface Props {
 
 export const ContactRow: React.FC<Props> = (props: Props) => {
   return (
-    <tr onClick={props.handleClick} className="checked">
+    <tr onClick={props.handleClick} className={props.contact.checked ? "checked" : "unchecked"}>
       <td>
         <div
-          className={`contact-button ${props.contact.checked ? "checked" : ""}`}
+          className={`avatar`}
         >
-          {props.contact.id}
-          {props.contact.firstName.charAt(0) + props.contact.lastName.charAt(0)}
+          <img
+            src={props.contact.avatar}
+            alt={
+              props.contact.firstName.charAt(0) +
+              props.contact.lastName.charAt(0)
+            }
+          />
         </div>
       </td>
       <td>
@@ -22,6 +27,9 @@ export const ContactRow: React.FC<Props> = (props: Props) => {
           {props.contact.firstName} {props.contact.lastName}{" "}
         </div>
         <div className={"email"}>{props.contact.email}</div>
+      </td>
+      <td>
+        <input type="checkbox" checked={props.contact.checked} />
       </td>
     </tr>
   );

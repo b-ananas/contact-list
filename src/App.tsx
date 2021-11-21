@@ -6,7 +6,7 @@ import { ContactRow } from "./components/ContactRow";
 import "./App.css";
 
 function App() {
-  const [users, setUsers] = useState<Array<Contact>>([]);
+  const [contacts, setContacts] = useState<Array<Contact>>([]);
   useEffect(() => {
     fetch(ApiUrl)
       .then((response) => response.json())
@@ -20,7 +20,7 @@ function App() {
           prev.lastName.localeCompare(next.lastName)
         )
       )
-      .then((json) => setUsers(json));
+      .then((json) => setContacts(json));
   }, []);
 
   const [checked, setChecked] = useState<Set<string>>(new Set());
@@ -40,8 +40,8 @@ function App() {
 
   useEffect(() => {
     console.log(checked);
-    setUsers(
-      users.map((usr) =>
+    setContacts(
+      contacts.map((usr) =>
         checked.has(usr.id)
           ? { ...usr, checked: true }
           : { ...usr, checked: false }
@@ -49,10 +49,15 @@ function App() {
     );
   }, [checked]);
 
+  const [filter, setFilter] = useState('')
+
   return (
     <div className="App">
+    <input type="text" onChange={e => setFilter(e.target.value)}></input>
       <table>
-        {users.map((usr) => (
+        {contacts
+          .filter((contact) => contact.lastName.includes(filter) || contact.firstName.includes(filter))
+          .map((usr) => (
           <ContactRow contact={usr} handleClick={() => udpateChecked(usr.id)} />
         ))}
       </table>
